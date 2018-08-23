@@ -11,6 +11,18 @@
 |
 */
 
+use App\User;
+use App\Address;
+
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/insert', function () {
+    $user = User::findOrFail(1);
+    // associative array instantiating a new object from the address
+    $address = new Address(['name'=>'1234 Fletcher Ave Tampa FL 33612']);
+    // now that the address variable is instantiated and has data, let's pull out the data
+    // store that data in a user variable
+    $user = address()->save($address);
 });
