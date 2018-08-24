@@ -28,6 +28,9 @@ Route::get('/', function () {
 /* ============================================================
  * One to One Relationship CRUD
  * ============================================================
+ * ============================================================
+ * Inserting records (C)
+ * ============================================================
  * Using the insert name for the route,
  * I am instantiating the Address object using an
  * associative array and saving the address for
@@ -42,4 +45,38 @@ Route::get('/insert', function () {
     // let's save that address for user one
     // store that data in a user variable
     $user->address()->save($address);
+});
+/*  ============================================================
+ *  Read inserted records (R)
+ *  ============================================================
+ */
+Route::get('/read', function() {
+    $user = User::findOrFail(1);
+    echo $user->address->name;
+});
+/*  ============================================================
+ *  Updating inserted records (U)
+ *  ============================================================
+ *  camel case what you want to do in laravel
+ *  each word you start in uppercase
+ *  ->first returns the first object
+ *  if you have more than one record, put a constraint on the data,
+ *  second where statement to check usually works
+ * ============================================================
+ * */
+Route::get('/update', function() {
+    $address = Address::whereUserId(1)->first();
+    //grab property from object
+    $address->name = "123123 Update Ave, Alaska";
+    // then save it
+    $address->save();
+});
+/*  ============================================================
+ *  Delete inserted records (D)
+ *  ============================================================
+ */
+Route::get('/delete', function() {
+    $user = User::findOrFail(1);
+    $user->address()->delete();
+    return "Done";
 });
